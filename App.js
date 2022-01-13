@@ -1,26 +1,28 @@
 
-// In App.js in a new project
-import WelcomeScreen from './app/screens/WelcomeScreen';
-import HomeScreen from './app/screens/HomeScreen';
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from "react";
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import WelcomeScreen from "./app/screens/WelcomeScreen";
+import HomeScreen from "./app/screens/HomeScreen";
 
+const RootStack = createStackNavigator(
+  {
+    Welcome: WelcomeScreen,
+    Home: HomeScreen
+  },
+  {
+    initialRouteName: "Welcome"
+  }
+);
 
+const AppContainer = createAppContainer(RootStack);
 
-const Stack = createNativeStackNavigator();
-
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
 }
 
-export default App;
+
 
 

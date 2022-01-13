@@ -11,9 +11,10 @@ export default class WelcomeScreen extends Component {
     getValues() {
         return axios.get(`https://rocketfuelapifoundation.herokuapp.com/email/${this.state.email}`)
         .then(response => {
-            alert(response.data);
             if (response.data = true) {
-                navigation.navigate('Home');
+                this.props.navigation.navigate('Home');
+            } else if (response.data = false) {
+                alert('Please enter an employee email.');
             }
         })
                 
@@ -39,7 +40,6 @@ export default class WelcomeScreen extends Component {
     }
  
 }
-const navigation = useNavigation();
 
 const styles = StyleSheet.create({
     background: {

@@ -19,7 +19,6 @@ export default class HomeScreen extends Component {
         return (
             <ImageBackground
             style={styles.background} >
-                <Image source={require("../assets/R2.png")} style={styles.logo}  />
                 <View style={styles.input}>
                     <TextInput 
                     style={styles.inputtext} 
@@ -28,7 +27,7 @@ export default class HomeScreen extends Component {
                 </View>
                 <TouchableOpacity style={styles.loginButton}
                 onPress={() => this.getValues()}>
-                    <Text style={styles.text}>Login</Text>
+                    <Text style={styles.text}>Sam</Text>
                 </TouchableOpacity>
             </ImageBackground>
         );
