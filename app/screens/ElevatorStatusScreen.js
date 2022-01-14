@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import { Item,SafeAreaView,ActivityIndicator,FlatList, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
 export default class HomeScreen extends Component {
     state = {
         isLoading: true,
-        dataSource: []
+        dataSource: [],
+        
     }
  
     componentDidMount() {
-        return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/status`)
+        return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/${item.id}`)
         .then(response => {
                 this.setState({
                     isLoading: false,
@@ -29,34 +31,17 @@ export default class HomeScreen extends Component {
             )
         } 
         else {
-            const Item = ({ item, onPress}) => (
-                <TouchableOpacity onPress={onPress} style={styles.item}>
-                  <Text  style={styles.item}>Elevator ID: {item.id}</Text>
-                </TouchableOpacity>
-              );
-            
-
-            const renderItem = ({ item }) => {
-              
-            
-              return (
-                
-                <Item
-                  item={item}
-                  onPress={() => this.props.navigation.navigate('Status', {item})}
-                />
-              );
-            };
-          
             return (
                 <ImageBackground
                 style={styles.background} >
                         <SafeAreaView style={styles.container}>
-                        <FlatList
-                            renderItem={renderItem}
-                            keyExtractor={(item) => item.id}
-                            data={this.state.dataSource}
-                        />
+                            <Text style={styles.item}>ID: {this.state.dataSource.id}</Text>
+                            <Text style={styles.item}>Serial Number: {this.state.dataSource.serial_number}</Text>
+                            <Text style={styles.item}>Model: {this.state.dataSource.model}</Text>
+                            <Text style={styles.item}>Status: {this.state.dataSource.status}</Text>
+                            <Text style={styles.item}>Date of Last Inspection: {this.state.dataSource.date_of_last_inspection}</Text>
+                            <Text style={styles.item}>Created at: {this.state.dataSource.created_at}</Text>
+                            <Text style={styles.item}>Column id: {this.state.dataSource.column_id}</Text>
                         </SafeAreaView>
                     
                     <TouchableOpacity style={styles.loginButton}
@@ -86,7 +71,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     item: {
-        fontSize: 30,
+        fontSize: 24,
         flex: 1,
         alignSelf: 'stretch',
         margin:10,
@@ -117,6 +102,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontWeight: 'bold',
         color: 'white',
+        
+    },
+    textblack: {
+        fontSize: 20,
+        alignItems: 'center',
+        fontWeight: 'bold',
+        color: 'black',
         
     },
     input : {
