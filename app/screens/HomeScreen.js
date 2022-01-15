@@ -20,6 +20,23 @@ export default class HomeScreen extends Component {
         })
                 
     }
+    componentDidUpdate(prevState) {
+        if (prevState.dataSource !== this.state.dataSource) {
+            return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/status`)
+            .then(response => {
+                    this.setState({
+                        isLoading: false,
+                        dataSource: response.data
+                    })
+                    // if (response.data.status == "Intervention") {
+                    //     this.setState({ backgroundColor: });
+                        
+                    // }        
+                
+            })
+        }
+                
+    }
     render() {
         if (this.state.isLoading) {
             return (
@@ -38,16 +55,15 @@ export default class HomeScreen extends Component {
 
             const renderItem = ({ item }) => {
               
-            
               return (
                 
                 <Item
                   item={item}
-                  onPress={() => this.props.navigation.navigate('Status', {item})}
+                  onPress={() => this.props.navigation.navigate('Status', {id : `${item.id}`})}
                 />
               );
             };
-          
+            
             return (
                 <ImageBackground
                 style={styles.background} >

@@ -2,24 +2,54 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import { Item,SafeAreaView,ActivityIndicator,FlatList, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import { useRoute,SafeAreaView,ActivityIndicator,FlatList, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
 export default class HomeScreen extends Component {
-    state = {
-        isLoading: true,
-        dataSource: [],
-        
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true,
+            dataSource: [],
+        }
     }
  
     componentDidMount() {
-        return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/${item.id}`)
+        const id = this.props.navigation.state.params.id;
+        return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/${id}`)
         .then(response => {
                 this.setState({
                     isLoading: false,
                     dataSource: response.data
                 })
+                // if (response.data.status == "Intervention") {
+                //     this.setState({ backgroundColor: });
+                    
+                // }        
             
         })
+                
+    }
+    componentDidUpdate(prevState) {
+        if (prevState.dataSource !== this.state.dataSource) {
+            const id = this.props.navigation.state.params.id;
+            return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/${id}`)
+            .then(response => {
+                    this.setState({
+                        isLoading: false,
+                        dataSource: response.data
+                    })
+                    // if (response.data.status == "Intervention") {
+                    //     this.setState({ backgroundColor: });
+                        
+                    // }        
+                
+            })
+        }
+                
+    }
+    async endTask() {
+        const response = await axios.patch(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/online/${this.state.dataSource.id}`);
+        alert(response.data);
                 
     }
     render() {
@@ -35,18 +65,18 @@ export default class HomeScreen extends Component {
                 <ImageBackground
                 style={styles.background} >
                         <SafeAreaView style={styles.container}>
-                            <Text style={styles.item}>ID: {this.state.dataSource.id}</Text>
+                            <Text style={styles.item} >ID: {this.state.dataSource.id}</Text>
                             <Text style={styles.item}>Serial Number: {this.state.dataSource.serial_number}</Text>
                             <Text style={styles.item}>Model: {this.state.dataSource.model}</Text>
-                            <Text style={styles.item}>Status: {this.state.dataSource.status}</Text>
+                            <Text style={this.state.dataSource.status ==  'Online' ? styles.itemOnline :styles.itemOffline }>Status: {this.state.dataSource.status}</Text>
                             <Text style={styles.item}>Date of Last Inspection: {this.state.dataSource.date_of_last_inspection}</Text>
                             <Text style={styles.item}>Created at: {this.state.dataSource.created_at}</Text>
                             <Text style={styles.item}>Column id: {this.state.dataSource.column_id}</Text>
                         </SafeAreaView>
                     
                     <TouchableOpacity style={styles.loginButton}
-                    onPress={() => this.props.navigation.navigate('Welcome')}>
-                        <Text style={styles.text}>Logout</Text>
+                    onPress={() => this.endTask()}>
+                        <Text style={styles.text}>End Task</Text>
                     </TouchableOpacity>
                 </ImageBackground>
             );
@@ -79,7 +109,28 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderBottomWidth: 1,
         borderBottomColor: '#eee'
-
+    },
+    itemOffline: {
+        fontSize: 24,
+        flex: 1,
+        alignSelf: 'stretch',
+        margin:10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+        backgroundColor: '#ff5454'
+    },
+    itemOnline: {
+        fontSize: 24,
+        flex: 1,
+        alignSelf: 'stretch',
+        margin:10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+        backgroundColor: '#afef86'
     },
     logo: {
         position: "absolute",
@@ -90,12 +141,21 @@ const styles = StyleSheet.create({
     },
 
     loginButton:{
+
         borderRadius: 5,
         alignItems: 'center',
         width: '50%',
         padding: 10,
         backgroundColor: '#1E90FF',
 
+    },
+    statusColor: {
+        right: 100,
+        borderRadius: 5,
+        alignItems: 'center',
+        width: '25%',
+        padding: 10,
+        backgroundColor: '#ff2828',
     },
     text: {
         fontSize: 16,
