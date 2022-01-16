@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Item,SafeAreaView,ActivityIndicator,FlatList, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
 export default class HomeScreen extends Component {
+
     state = {
         isLoading: true,
         dataSource: []
@@ -11,32 +12,26 @@ export default class HomeScreen extends Component {
  
     componentDidMount() {
         return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/status`)
-        .then(response => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: response.data
-                })
-            
+        .then(response => {    
+            this.setState({
+                isLoading: false,
+                dataSource: response.data
+            })
         })
-                
     }
+
     componentDidUpdate(prevState) {
         if (prevState.dataSource !== this.state.dataSource) {
             return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/status`)
             .then(response => {
-                    this.setState({
-                        isLoading: false,
-                        dataSource: response.data
-                    })
-                    // if (response.data.status == "Intervention") {
-                    //     this.setState({ backgroundColor: });
-                        
-                    // }        
-                
+                this.setState({
+                    isLoading: false,
+                    dataSource: response.data
+                })                
             })
         }
-                
     }
+
     render() {
         if (this.state.isLoading) {
             return (

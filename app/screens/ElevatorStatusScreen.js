@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { useRoute,SafeAreaView,ActivityIndicator,FlatList, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView,ActivityIndicator,ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 export default class HomeScreen extends Component {
     constructor(props) {
@@ -17,41 +15,31 @@ export default class HomeScreen extends Component {
         const id = this.props.navigation.state.params.id;
         return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/${id}`)
         .then(response => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: response.data
-                })
-                // if (response.data.status == "Intervention") {
-                //     this.setState({ backgroundColor: });
-                    
-                // }        
-            
+            this.setState({
+                isLoading: false,
+                dataSource: response.data
+            })
         })
-                
     }
+
     componentDidUpdate(prevState) {
         if (prevState.dataSource !== this.state.dataSource) {
             const id = this.props.navigation.state.params.id;
             return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/${id}`)
             .then(response => {
-                    this.setState({
-                        isLoading: false,
-                        dataSource: response.data
-                    })
-                    // if (response.data.status == "Intervention") {
-                    //     this.setState({ backgroundColor: });
-                        
-                    // }        
-                
+                this.setState({
+                    isLoading: false,
+                    dataSource: response.data
+                })
             })
         }
-                
     }
+
     async endTask() {
         const response = await axios.patch(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/online/${this.state.dataSource.id}`);
         alert(response.data);
-                
     }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -64,16 +52,15 @@ export default class HomeScreen extends Component {
             return (
                 <ImageBackground
                 style={styles.background} >
-                        <SafeAreaView style={styles.container}>
-                            <Text style={styles.item} >ID: {this.state.dataSource.id}</Text>
-                            <Text style={styles.item}>Serial Number: {this.state.dataSource.serial_number}</Text>
-                            <Text style={styles.item}>Model: {this.state.dataSource.model}</Text>
-                            <Text style={this.state.dataSource.status ==  'Online' ? styles.itemOnline :styles.itemOffline }>Status: {this.state.dataSource.status}</Text>
-                            <Text style={styles.item}>Date of Last Inspection: {this.state.dataSource.date_of_last_inspection}</Text>
-                            <Text style={styles.item}>Created at: {this.state.dataSource.created_at}</Text>
-                            <Text style={styles.item}>Column id: {this.state.dataSource.column_id}</Text>
-                        </SafeAreaView>
-                    
+                    <SafeAreaView style={styles.container}>
+                        <Text style={styles.item} >ID: {this.state.dataSource.id}</Text>
+                        <Text style={styles.item}>Serial Number: {this.state.dataSource.serial_number}</Text>
+                        <Text style={styles.item}>Model: {this.state.dataSource.model}</Text>
+                        <Text style={this.state.dataSource.status ==  'Online' ? styles.itemOnline :styles.itemOffline }>Status: {this.state.dataSource.status}</Text>
+                        <Text style={styles.item}>Date of Last Inspection: {this.state.dataSource.date_of_last_inspection}</Text>
+                        <Text style={styles.item}>Created at: {this.state.dataSource.created_at}</Text>
+                        <Text style={styles.item}>Column id: {this.state.dataSource.column_id}</Text>
+                    </SafeAreaView>
                     <TouchableOpacity style={styles.loginButton}
                     onPress={() => this.endTask()}>
                         <Text style={styles.text}>End Task</Text>
@@ -119,7 +106,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderBottomWidth: 1,
         borderBottomColor: '#eee',
-        backgroundColor: '#ff5454'
+        color: '#ff5454'
     },
     itemOnline: {
         fontSize: 24,
@@ -130,7 +117,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderBottomWidth: 1,
         borderBottomColor: '#eee',
-        backgroundColor: '#afef86'
+        color: '#afef86'
     },
     logo: {
         position: "absolute",
