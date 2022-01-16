@@ -61,9 +61,9 @@ export default class HomeScreen extends Component {
                         <Text style={styles.item}>Created at: {this.state.dataSource.created_at}</Text>
                         <Text style={styles.item}>Column id: {this.state.dataSource.column_id}</Text>
                     </SafeAreaView>
-                    <TouchableOpacity style={styles.loginButton}
-                    onPress={() => this.endTask()}>
-                        <Text style={styles.text}>End Task</Text>
+                    <TouchableOpacity style={this.state.dataSource.status ==  'Online' ? styles.returnButton :styles.loginButton }
+                    onPress={() =>this.state.dataSource.status ==  'Online' ? this.props.navigation.navigate('Home') :this.endTask()}>
+                        <Text style={this.state.dataSource.status ==  'Online' ? styles.textblack :styles.text}>{this.state.dataSource.status ==  'Online' ? 'Return' :'End Task' }</Text>
                     </TouchableOpacity>
                 </ImageBackground>
             );
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderBottomWidth: 1,
         borderBottomColor: '#eee',
-        color: '#afef86'
+        color: '#56be37'
     },
     logo: {
         position: "absolute",
@@ -128,12 +128,22 @@ const styles = StyleSheet.create({
     },
 
     loginButton:{
+        borderRadius: 5,
+        alignItems: 'center',
+        height: 100,
+        width: '75%',
+        padding: 10,
+        backgroundColor: '#1E90FF',
+    },
+
+    returnButton:{
 
         borderRadius: 5,
         alignItems: 'center',
-        width: '50%',
+        height: 100,
+        width: '75%',
         padding: 10,
-        backgroundColor: '#1E90FF',
+        backgroundColor: '#316eaa',
 
     },
     statusColor: {
@@ -145,18 +155,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#ff2828',
     },
     text: {
-        fontSize: 16,
+        position: "absolute",
+        top: '40%',
+        fontSize: 26,
         alignItems: 'center',
         fontWeight: 'bold',
         color: 'white',
         
     },
     textblack: {
-        fontSize: 20,
+        position: "absolute",
+        top: '40%',
+        fontSize: 26,
         alignItems: 'center',
         fontWeight: 'bold',
         color: 'black',
-        
     },
     input : {
         bottom: 250,

@@ -4,11 +4,17 @@ import axios from 'axios';
 import { Item,SafeAreaView,ActivityIndicator,FlatList, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
 export default class HomeScreen extends Component {
-
-    state = {
-        isLoading: true,
-        dataSource: []
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true,
+            dataSource: []
+        }
     }
+    // state = {
+    //     isLoading: true,
+    //     dataSource: []
+    // }
  
     componentDidMount() {
         return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/status`)
@@ -20,8 +26,8 @@ export default class HomeScreen extends Component {
         })
     }
 
-    componentDidUpdate(prevState) {
-        if (prevState.dataSource !== this.state.dataSource) {
+    componentDidUpdate(prevProps, prevState) {
+        if (!prevState.dataSource) {
             return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/status`)
             .then(response => {
                 this.setState({
@@ -118,13 +124,13 @@ const styles = StyleSheet.create({
     loginButton:{
         borderRadius: 5,
         alignItems: 'center',
-        width: '50%',
-        padding: 10,
+        height: 75,
+        width: '75%',
+        padding: 20,
         backgroundColor: '#1E90FF',
-
     },
     text: {
-        fontSize: 16,
+        fontSize: 24,
         alignItems: 'center',
         fontWeight: 'bold',
         color: 'white',

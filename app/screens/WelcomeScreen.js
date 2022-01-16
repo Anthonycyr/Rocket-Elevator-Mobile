@@ -36,10 +36,13 @@ export default class WelcomeScreen extends Component {
                     <Text style={styles.text}>Login</Text>
                 </TouchableOpacity>
             </ImageBackground>
+            
+            
         );
     }
  
 }
+
 
 const styles = StyleSheet.create({
     background: {
@@ -57,6 +60,7 @@ const styles = StyleSheet.create({
         
     },
     loginButton:{
+        borderRadius: 5,
         alignItems: 'center',
         width: '100%',
         padding: 20,
