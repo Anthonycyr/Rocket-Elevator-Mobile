@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import { Item,SafeAreaView,ActivityIndicator,FlatList, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView,ActivityIndicator,FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 export default class HomeScreen extends Component {
     constructor(props) {
@@ -11,10 +11,6 @@ export default class HomeScreen extends Component {
             dataSource: []
         }
     }
-    // state = {
-    //     isLoading: true,
-    //     dataSource: []
-    // }
  
     componentDidMount() {
         return axios.get(`https://rocketfuelapifoundation.herokuapp.com/api/Elevators/status`)
@@ -113,14 +109,6 @@ const styles = StyleSheet.create({
         borderBottomColor: '#eee'
 
     },
-    logo: {
-        position: "absolute",
-        top: 80,
-        width: '100%',
-        height: 100, 
-        
-    },
-
     loginButton:{
         borderRadius: 5,
         alignItems: 'center',
@@ -136,20 +124,4 @@ const styles = StyleSheet.create({
         color: 'white',
         
     },
-    input : {
-        bottom: 250,
-        height: 40,
-        width: '100%',
-        borderWidth: 1,
-        borderRadius:5,
-        borderColor: '#e8e8e8',
-        backgroundColor: 'white',
-        paddingHorizontal: 10
-    },
-    inputtext : {
-        fontSize: 24,
-        color: 'black',
-
-    }
-    
 })

@@ -6,7 +6,6 @@ import WelcomeScreen from "./app/screens/WelcomeScreen";
 import HomeScreen from "./app/screens/HomeScreen";
 import Logo from "./app/shared/logo";
 import ElevatorStatusScreen from "./app/screens/ElevatorStatusScreen";
-import { Image } from "react-native";
 
 const RootStack = createStackNavigator(
   {

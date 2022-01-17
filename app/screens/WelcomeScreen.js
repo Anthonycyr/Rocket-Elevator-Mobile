@@ -7,17 +7,15 @@ export default class WelcomeScreen extends Component {
     state = {
         email: ''
     }
+
     getValues() {
         return axios.get(`https://rocketfuelapifoundation.herokuapp.com/email/${this.state.email}`)
         .then(response => {
-            // alert(response.data);
             if (response.data == true) {
                 this.props.navigation.navigate('Home');
 
             }
-        })
-        .catch()
-                
+        })      
     }
 
     render() {
@@ -36,8 +34,6 @@ export default class WelcomeScreen extends Component {
                     <Text style={styles.text}>Login</Text>
                 </TouchableOpacity>
             </ImageBackground>
-            
-            
         );
     }
  
@@ -57,7 +53,6 @@ const styles = StyleSheet.create({
         top: 80,
         width: '100%',
         height: 100, 
-        
     },
     loginButton:{
         borderRadius: 5,
@@ -72,7 +67,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontWeight: 'bold',
         color: 'white',
-        
     },
     input : {
         bottom: 250,
@@ -87,7 +81,6 @@ const styles = StyleSheet.create({
     inputtext : {
         fontSize: 24,
         color: 'black',
-
     }
     
 })

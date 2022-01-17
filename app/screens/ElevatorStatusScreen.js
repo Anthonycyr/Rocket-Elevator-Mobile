@@ -119,14 +119,6 @@ const styles = StyleSheet.create({
         borderBottomColor: '#eee',
         color: '#56be37'
     },
-    logo: {
-        position: "absolute",
-        top: 80,
-        width: '100%',
-        height: 100, 
-        
-    },
-
     loginButton:{
         borderRadius: 5,
         alignItems: 'center',
@@ -135,7 +127,6 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#1E90FF',
     },
-
     returnButton:{
 
         borderRadius: 5,
@@ -171,20 +162,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'black',
     },
-    input : {
-        bottom: 250,
-        height: 40,
-        width: '100%',
-        borderWidth: 1,
-        borderRadius:5,
-        borderColor: '#e8e8e8',
-        backgroundColor: 'white',
-        paddingHorizontal: 10
-    },
-    inputtext : {
-        fontSize: 24,
-        color: 'black',
-
-    }
-    
 })
